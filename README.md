@@ -11,7 +11,7 @@ Using feature and bugfix branches, with anything in main counting as deployable,
 
 ### Style guide
 
-Generally following [PEP 8](<https://peps.python.org/pep-0008/>), e.g. naimg conventions are function_name, variable_name, ClassName, CONSTANT_NAME
+Generally following [PEP 8](<https://peps.python.org/pep-0008/>), e.g. naming conventions are function_name, variable_name, ClassName, CONSTANT_NAME
 
 ### Requirements install
 
