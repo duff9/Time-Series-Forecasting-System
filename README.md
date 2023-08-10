@@ -3,6 +3,8 @@
 A basic and flexible time series forecasting system based in Python 3.
 Allows a range of different models to be used to forecast a single time series loaded from a csv file.
 
+Demand data from UK National Grid ESO https://data.nationalgrideso.com/demand/historic-demand-data
+
 ## Development guidlines
 
 ### Git Branch strategy
