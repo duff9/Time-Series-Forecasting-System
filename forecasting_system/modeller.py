@@ -1,37 +1,49 @@
+"""Generalised interface for using different Models"""
+
 import importlib as il
 import pandas as pd
 import datetime as dt
 
 
 def get_model_class(model_class):
+    """Obtain the model class constructor"""
     model_module = il.import_module('forecasting_system.models.' + model_class)
     model = getattr(model_module, model_class)
     return model
 
 
 def create_model(model_class_name, configuration):
+    """Create a model object using one of the classes in the "models" folder.
+    All of the model classes inherit from the parent "Model" class.
+    """
     model_class = get_model_class(model_class_name)
     model = model_class(model_class_name, configuration)
     return model
 
 
 def train_model(model, observation_data, train_start_date=None, train_end_date=None):
-    training_data = observation_data.copy()
+    """Train a model using observation data.
 
+    observation_data -- dataframe with datetime index and Observation column as dependent variable
+    train_start_date -- date string, train from this date inclusive
+    train_start_date -- date string, train to this date exclusive
+    """
     model.reset()
+    training_data = observation_data.copy()
 
     if train_start_date:
         training_data.drop(
-            observation_data[observation_data.index < train_start_date].index,
+            training_data[training_data.index < train_start_date].index,
             inplace=True
         )
 
     if train_end_date:
         training_data.drop(
-            observation_data[observation_data.index >= train_end_date].index,
+            training_data[training_data.index >= train_end_date].index,
             inplace=True
         )
 
+    model.training_data = training_data
     model.train(training_data)
 
 

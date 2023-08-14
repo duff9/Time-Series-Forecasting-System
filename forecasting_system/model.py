@@ -3,13 +3,13 @@ class Model:
     """
 
     trained_model = None
-    observation_data = None
+    training_data = None
 
     def __init__(self, model_class, configuration):
         self.model_class = model_class
         self.configuration = configuration
 
-    def train(self, observation_data):
+    def train(self, training_data):
         return
 
     def predict(self, forecast_data):
@@ -17,7 +17,7 @@ class Model:
 
     def reset(self):
         self.trained_model = None
-        self.observation_data = None
+        self.training_data = None
 
     def __repr__(self):
         # Custom display when using print on a model
