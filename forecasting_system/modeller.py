@@ -18,6 +18,8 @@ def create_model(model_class_name, configuration):
 def train_model(model, observation_data, train_start_date=None, train_end_date=None):
     training_data = observation_data.copy()
 
+    model.reset()
+
     if train_start_date:
         training_data.drop(
             observation_data[observation_data.index < train_start_date].index,
@@ -30,8 +32,7 @@ def train_model(model, observation_data, train_start_date=None, train_end_date=N
             inplace=True
         )
 
-    if model.trained_model is None:
-        model.train(training_data)
+    model.train(training_data)
 
 
 def predict_from_model(

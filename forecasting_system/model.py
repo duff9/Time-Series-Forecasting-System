@@ -18,7 +18,6 @@ class Model:
     def reset(self):
         self.trained_model = None
         self.observation_data = None
-        self.is_trained = False
 
     def __repr__(self):
         # Custom display when using print on a model
