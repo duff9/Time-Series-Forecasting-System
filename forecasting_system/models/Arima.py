@@ -3,7 +3,7 @@ from statsmodels.tsa.arima.model import ARIMA
 
 
 class Arima(Model.Model):
-    """
+    """An autoregressive integrated moving average model
     """
 
     def __init__(self, model_class, configuration):
@@ -16,7 +16,7 @@ class Arima(Model.Model):
         if len(observation_data['Observation'].values) > 0:
 
             model = ARIMA(
-                observation_data['Observation'].values, 
+                observation_data['Observation'].values,
                 order=(
                     self.configuration['AR_lags'] or 0,
                     self.configuration['differences'] or 1,
