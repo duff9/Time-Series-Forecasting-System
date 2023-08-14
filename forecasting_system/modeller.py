@@ -3,6 +3,7 @@
 import importlib as il
 import pandas as pd
 import datetime as dt
+from forecasting_system.Prediction import Prediction
 
 
 def get_model_class(model_class):
@@ -65,9 +66,6 @@ def predict_from_model(
     prediction.set_index('Date_Time', inplace=True)
     prediction = prediction.merge(prediction_data, how='left', left_index=True, right_index=True)
 
-    prediction = model.predict(prediction)
-
-    if (not prediction['Observation'].empty):
-        prediction['Error'] = prediction['Prediction'] - prediction['Observation']
+    prediction = Prediction(model.predict(prediction))
 
     return prediction

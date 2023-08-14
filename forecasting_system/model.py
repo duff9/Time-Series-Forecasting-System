@@ -30,4 +30,6 @@ class Model:
         else:
             print_text = 'Trained Model '
 
-        return print_text + "({}, {})".format(self.model_class, self.configuration)
+        return print_text + "({}, {}) {}".format(
+            self.model_class, self.configuration, self.trained_model
+        )
