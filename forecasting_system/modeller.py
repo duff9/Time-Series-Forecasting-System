@@ -45,12 +45,13 @@ def train_model(model, observation_data, train_start_date=None, train_end_date=N
         )
 
     model.training_data = training_data
+    # print(training_data.head())
     model.train(training_data)
 
 
 def predict_from_model(
     model,
-    prediction_data,
+    predictors,
     forecast_start_date,
     steps,
     timestep=dt.timedelta(minutes=30)
@@ -64,7 +65,7 @@ def predict_from_model(
         'Prediction': [None for t in range(len(datetimes))]
     })
     prediction.set_index('Date_Time', inplace=True)
-    prediction = prediction.merge(prediction_data, how='left', left_index=True, right_index=True)
+    prediction = prediction.merge(predictors, how='left', left_index=True, right_index=True)
 
     prediction = Prediction(model.predict(prediction))
 

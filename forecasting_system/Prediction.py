@@ -34,7 +34,7 @@ class Prediction:
             self.prediction[['Prediction', 'Observation', 'Error (P-O)']].plot()
         else:
             self.prediction[['Prediction', 'Observation']].plot()
-        plt.ylabel('Observation')
+        # plt.ylabel('Observation')
         plt.xlabel('Date_Time')
         plt.title('Prediction')
         plt.show()

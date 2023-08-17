@@ -3,10 +3,11 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Input
 from keras.layers import LSTM
 from keras.optimizers import Adam
+import matplotlib.pyplot as plt
 
 
 class Lstm(Model.Model):
-    """An LSTM neural network model
+    """A multivariate LSTM neural network model
     """
 
     x_mean = None
@@ -23,7 +24,7 @@ class Lstm(Model.Model):
         if len(training_data['Observation'].values) > 0:
 
             # Reshape data for LSTM model
-            # TODO split out training data to add validation data?
+            # TODO split out training data to add validation data
 
             train_x = training_data[self.configuration['variables']].values
             train_y = training_data['Observation'].values
@@ -38,7 +39,7 @@ class Lstm(Model.Model):
                 train_y = (train_y - self.y_mean) / self.y_std
                 # validation_data = (validation_data - sample_mean) / sample_std
 
-            # TODO figure out how to differentiate between number of variables and sequence length of a variable in input
+            # TODO differentiate between number of variables and sequence/observation length of a variable in input
             observations = train_x.shape[0]
             observation_length = 1
             variables = train_x.shape[1]
@@ -47,16 +48,35 @@ class Lstm(Model.Model):
             # [number of observations/sequences, length of input observation/sequence, number of variables (features)]
             train_x = train_x.reshape((observations, observation_length, variables))
 
+            # TODO make the layers part of the configuration? And the optimizer?
             model = Sequential([
                 Input(shape=(observation_length, variables)),
-                # keras handles the number of observations in the input_shape
+                # keras handles the number of observations in the input_shape automatically
                 LSTM(units=50, activation='relu'),
                 Dense(units=1),
             ])
+
             model.summary()
-            model.compile(optimizer=Adam(learning_rate=1.2), loss='mse')
-            model.fit(train_x, train_y, epochs=200, verbose=0)
+
+            # TODO add default values for the configuration dictionary to use if not specified
+            model.compile(
+                optimizer=Adam(learning_rate=self.configuration['Learning_rate']),
+                loss=self.configuration['Loss_function']
+            )
+
+            history = model.fit(train_x, train_y, epochs=self.configuration['Epochs'], verbose=0)
+
             self.trained_model = model
+
+            if self.configuration['Plot_loss']:
+                loss_values = history.history['loss']
+                epochs = range(1, len(loss_values)+1)
+
+                plt.plot(epochs, loss_values, label='Training Loss')
+                plt.xlabel('Epochs')
+                plt.ylabel('Loss')
+                plt.legend()
+                plt.show()
 
     def predict(self, forecast_data):
 

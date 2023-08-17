@@ -18,7 +18,7 @@ def format_national_grid_data(data, obs_column):
 
     data.rename(columns={obs_column: "Observation"}, inplace=True)
 
-    cols_to_keep = ['Observation', 'SETTLEMENT_PERIOD']
+    cols_to_keep = ['Observation', 'SETTLEMENT_PERIOD', 'EMBEDDED_SOLAR_GENERATION']
 
     data.drop(columns=[col for col in data.columns if col not in cols_to_keep], inplace=True)
 

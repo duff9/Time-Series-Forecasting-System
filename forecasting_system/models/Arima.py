@@ -3,7 +3,7 @@ from statsmodels.tsa.arima.model import ARIMA
 
 
 class Arima(Model.Model):
-    """An autoregressive integrated moving average model
+    """An autoregressive integrated moving average model, currently univariate
     """
 
     def __init__(self, model_class, configuration):

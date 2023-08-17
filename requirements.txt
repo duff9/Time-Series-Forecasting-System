@@ -6,3 +6,4 @@ sklearn==0.0.post7
 importlib==1.0.4
 tensorflow==2.13.0
 keras==2.13.1
+pytest==7.4.0

@@ -3,7 +3,7 @@ from statsmodels.tsa.ar_model import AutoReg
 
 
 class Autoregressive(Model.Model):
-    """Use observations at previous time steps to predict observations at future time steps
+    """Use observations at previous time steps to predict observations at future time steps, univariate
     """
 
     def __init__(self, model_class, configuration):
