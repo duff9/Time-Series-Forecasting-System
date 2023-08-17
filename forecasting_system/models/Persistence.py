@@ -8,12 +8,11 @@ class Persistence(Model.Model):
     def __init__(self, model_class, configuration):
         super().__init__(model_class, configuration)
 
-    def train(self, observation_data):
+    def train(self, training_data):
         self.trained_model = None
-        self.observation_data = observation_data
 
-        if len(observation_data['Observation'].values) > 0:
-            self.trained_model = observation_data['Observation'].values[-1]
+        if len(training_data['Observation'].values) > 0:
+            self.trained_model = training_data['Observation'].values[-1]
 
     def predict(self, forecast_data):
         forecast_data['Prediction'] = self.trained_model
