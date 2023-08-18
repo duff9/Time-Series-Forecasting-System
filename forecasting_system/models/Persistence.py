@@ -1,7 +1,7 @@
-from forecasting_system import Model
+from forecasting_system.Model import Model
 
 
-class Persistence(Model.Model):
+class Persistence(Model):
     """Uses the current observation as the prediction for the next time steps
     """
 

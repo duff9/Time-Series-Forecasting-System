@@ -1,12 +1,11 @@
-from forecasting_system import Model
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Input
-from keras.layers import LSTM
+from forecasting_system.Model import Model
+from keras.models import Sequential
+from keras.layers import Dense, Input, LSTM
 from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 
 
-class Lstm(Model.Model):
+class Lstm(Model):
     """A multivariate LSTM neural network model
     """
 
@@ -64,6 +63,7 @@ class Lstm(Model.Model):
                 loss=self.configuration['Loss_function']
             )
 
+            # TODO add auto stop feature when the loss stops improving
             history = model.fit(train_x, train_y, epochs=self.configuration['Epochs'], verbose=0)
 
             self.trained_model = model

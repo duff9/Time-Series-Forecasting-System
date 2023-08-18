@@ -1,6 +1,7 @@
 import pandas as pd
 import os
-import datetime as dt
+from zipfile import ZipFile
+from keras.utils import get_file
 
 
 def read_data_file(file_name):
@@ -10,6 +11,10 @@ def read_data_file(file_name):
     return file
 
 
-def halfhour_to_time(halfhour):
-    minutes = int((halfhour - 1) * 30)
-    return dt.time(minutes // 60, minutes % 60, 0)
+def download_weather_data():
+    uri = "https://storage.googleapis.com/tensorflow/tf-keras-datasets/jena_climate_2009_2016.csv.zip"
+    zip_path = get_file(origin=uri, fname="jena_climate_2009_2016.csv.zip")
+    zip_file = ZipFile(zip_path)
+    zip_file.extractall('data')
+    file_name = "jena_climate_2009_2016.csv"
+    return read_data_file(file_name)
