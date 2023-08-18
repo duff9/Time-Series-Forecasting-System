@@ -1,8 +1,8 @@
-from forecasting_system import Model
+from forecasting_system.Model import Model
 from statsmodels.tsa.arima.model import ARIMA
 
 
-class Arima(Model.Model):
+class Arima(Model):
     """An autoregressive integrated moving average model, currently univariate
     """
 

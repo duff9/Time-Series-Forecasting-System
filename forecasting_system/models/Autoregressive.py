@@ -1,8 +1,8 @@
-from forecasting_system import Model
+from forecasting_system.Model import Model
 from statsmodels.tsa.ar_model import AutoReg
 
 
-class Autoregressive(Model.Model):
+class Autoregressive(Model):
     """Use observations at previous time steps to predict observations at future time steps, univariate
     """
 
