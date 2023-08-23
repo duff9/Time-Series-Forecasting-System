@@ -2,6 +2,7 @@ from forecasting_system.Model import Model
 from keras.models import Sequential
 from keras.layers import Dense, Input, LSTM
 from keras.optimizers import Adam
+from keras.callbacks import EarlyStopping
 import matplotlib.pyplot as plt
 
 
@@ -63,8 +64,20 @@ class Lstm(Model):
                 loss=self.configuration['Loss_function']
             )
 
-            # TODO add auto stop feature when the loss stops improving
-            history = model.fit(train_x, train_y, epochs=self.configuration['Epochs'], verbose=0)
+            auto_stop = EarlyStopping(
+                monitor="loss",
+                min_delta=0,
+                patience=15,
+                start_from_epoch=50
+            )
+
+            history = model.fit(
+                train_x,
+                train_y,
+                epochs=self.configuration['Epochs'],
+                callbacks=[auto_stop],
+                verbose=0
+            )
 
             self.trained_model = model
 
