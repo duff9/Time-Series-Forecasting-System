@@ -16,7 +16,12 @@ def format_columns(data, obs_column, predictors):
     return data
 
 
-def format_national_grid_data(data, obs_column, predictors=['Observation', 'SETTLEMENT_PERIOD', 'EMBEDDED_SOLAR_GENERATION']):
+def format_national_grid_data(
+    data,
+    obs_column,
+    predictors=['Observation', 'SETTLEMENT_PERIOD', 'EMBEDDED_SOLAR_GENERATION'],
+    resample_rule=dt.timedelta(minutes=30)
+):
     # convert date and period to datetime
 
     # TODO date and period in files are in local time not UTC, removing extra hour for now
@@ -31,13 +36,15 @@ def format_national_grid_data(data, obs_column, predictors=['Observation', 'SETT
     data.set_index('Date_Time', inplace=True)
 
     data = format_columns(data, obs_column, predictors)
+    data = data.resample(resample_rule).first()
     return data
 
 
-def format_jena_climate_data(data, obs_column, predictors):
+def format_jena_climate_data(data, obs_column, predictors, resample_rule=dt.timedelta(minutes=30)):
     data['Date_Time'] = pd.to_datetime(data.index, format='%d.%m.%Y %H:%M:%S')
     data.reset_index(inplace=True)
     data.set_index('Date_Time', inplace=True)
     data.drop(columns=['Date Time'], inplace=True)
     data = format_columns(data, obs_column, predictors)
+    data = data.resample(resample_rule).mean()
     return data
