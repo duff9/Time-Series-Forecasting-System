@@ -10,10 +10,11 @@ class Model:
         self.configuration = configuration
 
     def train(self, training_data):
+        self.training_data = training_data
         return
 
-    def predict(self, forecast_data):
-        return
+    def predict(self, prediction_data):
+        return prediction_data
 
     def reset(self):
         self.trained_model = None
