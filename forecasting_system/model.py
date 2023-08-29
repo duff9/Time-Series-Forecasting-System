@@ -9,12 +9,22 @@ class Model:
         self.model_class = model_class
         self.configuration = configuration
 
-    def train(self, training_data):
+    def pre_train_actions(self, training_data):
+        self.trained_model = None
         self.training_data = training_data
-        return
 
-    def predict(self, prediction_data):
-        return prediction_data
+        train_x = training_data[self.configuration.get('variables') or []].values
+        train_y = training_data['Observation'].values
+
+        if not len(training_data['Observation'].values) > 0:
+            raise ValueError('''No observation data found,
+                 observation data is required to train a model''')
+
+        return train_x, train_y
+
+    def post_train_actions(self, train_model):
+        self.trained_model = train_model
+        return
 
     def reset(self):
         self.trained_model = None
